@@ -74,10 +74,15 @@ class WCShippingLabelModel(@PrimaryKey @Column private var id: Int = 0) : Identi
 
     /**
      * Returns the list of products the shipping labels were purchased for
+     *
+     * Sample response: "[Belt, Cap, Herman Miller Chair Embody]" would be split into a list
+     * ["Belt", "Cap", "Herman Miller Chair Embody"]
      */
     fun getProductNames(): List<String> {
-        val responseType = object : TypeToken<List<String>>() {}.type
-        return gson.fromJson(productNames, responseType) as? List<String> ?: emptyList()
+        return productNames
+                .removePrefix("[")
+                .removeSuffix("]")
+                .split(",")
     }
 
     /**
