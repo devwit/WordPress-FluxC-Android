@@ -146,6 +146,11 @@ class WCProductStore @Inject constructor(dispatcher: Dispatcher, private val wcP
         val category: WCProductCategoryModel
     ) : Payload<BaseNetworkError>()
 
+    class AddProductTagsPayload(
+        val site: SiteModel,
+        val tags: List<WCProductTagModel>
+    ) : Payload<BaseNetworkError>()
+
     class FetchProductTagsPayload(
         var site: SiteModel,
         var pageSize: Int = DEFAULT_PRODUCT_TAGS_PAGE_SIZE,
@@ -399,6 +404,17 @@ class WCProductStore @Inject constructor(dispatcher: Dispatcher, private val wcP
         ) : this(site) {
             this.error = error
         }
+    }
+
+    class RemoteAddedProductTagsResponsePayload(
+        val site: SiteModel,
+        val tags: List<WCProductTagModel>
+    ) : Payload<ProductError>() {
+        constructor(
+            error: ProductError,
+            site: SiteModel,
+            tags: List<WCProductTagModel>
+        ) : this(site, tags) { this.error = error }
     }
 
     // OnChanged events
