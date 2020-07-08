@@ -558,9 +558,13 @@ class OrderRestClient(
      *
      * Dispatches a [WCOrderAction.DELETED_ORDER_SHIPMENT_TRACKING] action with the results
      */
-    fun deleteShipmentTrackingForOrder(site: SiteModel, order: WCOrderModel, tracking: WCOrderShipmentTrackingModel) {
+    fun deleteShipmentTrackingForOrder(
+        site: SiteModel,
+        order: WCOrderModel,
+        remoteTrackingId: String
+    ) {
         val url = WOOCOMMERCE.orders.id(order.remoteOrderId)
-                .shipment_trackings.tracking(tracking.remoteTrackingId).pathV2
+                .shipment_trackings.tracking(remoteTrackingId).pathV2
 
         val responseType = object : TypeToken<OrderShipmentTrackingApiResponse>() {}.type
         val params = emptyMap<String, String>()
@@ -570,7 +574,6 @@ class OrderRestClient(
                         orderShipmentTrackingResponseToModel(it).apply {
                             localSiteId = site.id
                             localOrderId = order.id
-                            id = tracking.id
                         }
                     }
 
@@ -579,7 +582,7 @@ class OrderRestClient(
                 },
                 WPComErrorListener { networkError ->
                     val trackingsError = networkErrorToOrderError(networkError)
-                    val payload = DeleteOrderShipmentTrackingResponsePayload(trackingsError, site, order, tracking)
+                    val payload = DeleteOrderShipmentTrackingResponsePayload(trackingsError, site, order, null)
                     dispatcher.dispatch(WCOrderActionBuilder.newDeletedOrderShipmentTrackingAction(payload))
                 })
         add(request)

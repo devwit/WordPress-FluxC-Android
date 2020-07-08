@@ -228,7 +228,7 @@ class WCOrderStore @Inject constructor(dispatcher: Dispatcher, private val wcOrd
     class DeleteOrderShipmentTrackingPayload(
         val site: SiteModel,
         val order: WCOrderModel,
-        val tracking: WCOrderShipmentTrackingModel
+        val remoteTrackingId: String
     ) : Payload<BaseNetworkError>()
 
     class DeleteOrderShipmentTrackingResponsePayload(
@@ -484,7 +484,7 @@ class WCOrderStore @Inject constructor(dispatcher: Dispatcher, private val wcOrd
     }
 
     private fun deleteOrderShipmentTracking(payload: DeleteOrderShipmentTrackingPayload) {
-        with(payload) { wcOrderRestClient.deleteShipmentTrackingForOrder(site, order, tracking) }
+        with(payload) { wcOrderRestClient.deleteShipmentTrackingForOrder(site, order, remoteTrackingId) }
     }
 
     private fun fetchOrderShipmentProviders(payload: FetchOrderShipmentProvidersPayload) {
@@ -759,7 +759,9 @@ class WCOrderStore @Inject constructor(dispatcher: Dispatcher, private val wcOrd
             onOrderChanged = OnOrderChanged(0).also { it.error = payload.error }
         } else {
             // Remove the record from the database and send response
-            val rowsAffected = payload.tracking?.let { OrderSqlUtils.deleteOrderShipmentTrackingById(it) } ?: 0
+            val rowsAffected = payload.tracking?.let {
+                OrderSqlUtils.deleteOrderShipmentByRemoteTrackingId(it.remoteTrackingId)
+            } ?: 0
             onOrderChanged = OnOrderChanged(rowsAffected)
         }
 

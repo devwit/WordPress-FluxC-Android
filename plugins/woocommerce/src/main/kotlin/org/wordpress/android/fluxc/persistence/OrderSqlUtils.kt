@@ -242,6 +242,17 @@ object OrderSqlUtils {
                 .orderBy(WCOrderShipmentTrackingModelTable.DATE_SHIPPED, SelectQuery.ORDER_DESCENDING).asModel
     }
 
+    fun deleteOrderShipmentByRemoteTrackingId(
+        remoteTrackingId: String
+    ): Int {
+        return WellSql.delete(WCOrderShipmentTrackingModel::class.java)
+                .where()
+                .equals(WCOrderShipmentTrackingModelTable.REMOTE_TRACKING_ID, remoteTrackingId)
+                .endWhere()
+                .execute()
+    }
+
+
     fun deleteOrderShipmentTrackingById(tracking: WCOrderShipmentTrackingModel): Int =
             WellSql.delete(WCOrderShipmentTrackingModel::class.java).whereId(tracking.id)
 
