@@ -252,7 +252,6 @@ object OrderSqlUtils {
                 .execute()
     }
 
-
     fun deleteOrderShipmentTrackingById(tracking: WCOrderShipmentTrackingModel): Int =
             WellSql.delete(WCOrderShipmentTrackingModel::class.java).whereId(tracking.id)
 

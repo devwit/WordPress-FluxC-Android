@@ -33,7 +33,6 @@ import org.wordpress.android.fluxc.store.WCOrderStore.RemoteOrderNotePayload
 import org.wordpress.android.fluxc.store.WCOrderStore.RemoteOrderPayload
 import org.wordpress.android.fluxc.store.WCOrderStore.SearchOrdersResponsePayload
 import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 import kotlin.properties.Delegates.notNull
@@ -70,7 +69,7 @@ class MockedStack_WCOrdersTest : MockedStack_Base() {
         orderRestClient.fetchOrders(siteModel, 0)
 
         countDownLatch = CountDownLatch(1)
-        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), TimeUnit.MILLISECONDS))
+        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), MILLISECONDS))
 
         assertEquals(WCOrderAction.FETCHED_ORDERS, lastAction!!.type)
         val payload = lastAction!!.payload as FetchOrdersResponsePayload
@@ -124,7 +123,7 @@ class MockedStack_WCOrdersTest : MockedStack_Base() {
         orderRestClient.searchOrders(siteModel, "", 0)
 
         countDownLatch = CountDownLatch(1)
-        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), TimeUnit.MILLISECONDS))
+        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), MILLISECONDS))
 
         assertEquals(WCOrderAction.SEARCHED_ORDERS, lastAction!!.type)
         val payload = lastAction!!.payload as SearchOrdersResponsePayload
@@ -138,7 +137,7 @@ class MockedStack_WCOrdersTest : MockedStack_Base() {
         orderRestClient.searchOrders(SiteModel(), "", 0)
 
         countDownLatch = CountDownLatch(1)
-        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), TimeUnit.MILLISECONDS))
+        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), MILLISECONDS))
 
         assertEquals(WCOrderAction.SEARCHED_ORDERS, lastAction!!.type)
         val payload = lastAction!!.payload as SearchOrdersResponsePayload
@@ -153,7 +152,7 @@ class MockedStack_WCOrdersTest : MockedStack_Base() {
         orderRestClient.fetchOrderCount(siteModel, statusFilter)
 
         countDownLatch = CountDownLatch(1)
-        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), TimeUnit.MILLISECONDS))
+        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), MILLISECONDS))
 
         assertEquals(WCOrderAction.FETCHED_ORDERS_COUNT, lastAction!!.type)
         val payload = lastAction!!.payload as FetchOrdersCountResponsePayload
@@ -168,7 +167,7 @@ class MockedStack_WCOrdersTest : MockedStack_Base() {
         orderRestClient.fetchOrders(SiteModel(), 0)
 
         countDownLatch = CountDownLatch(1)
-        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), TimeUnit.MILLISECONDS))
+        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), MILLISECONDS))
 
         assertEquals(WCOrderAction.FETCHED_ORDERS, lastAction!!.type)
         val payload = lastAction!!.payload as FetchOrdersResponsePayload
@@ -182,7 +181,7 @@ class MockedStack_WCOrdersTest : MockedStack_Base() {
         orderRestClient.fetchSingleOrder(siteModel, remoteOrderId)
 
         countDownLatch = CountDownLatch(1)
-        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), TimeUnit.MILLISECONDS))
+        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), MILLISECONDS))
 
         assertEquals(WCOrderAction.FETCHED_SINGLE_ORDER, lastAction!!.type)
         val payload = lastAction!!.payload as RemoteOrderPayload
@@ -200,7 +199,7 @@ class MockedStack_WCOrdersTest : MockedStack_Base() {
         orderRestClient.fetchSingleOrder(siteModel, remoteOrderId)
 
         countDownLatch = CountDownLatch(1)
-        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), TimeUnit.MILLISECONDS))
+        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), MILLISECONDS))
 
         assertEquals(WCOrderAction.FETCHED_SINGLE_ORDER, lastAction!!.type)
         val payload = lastAction!!.payload as RemoteOrderPayload
@@ -221,7 +220,7 @@ class MockedStack_WCOrdersTest : MockedStack_Base() {
         orderRestClient.updateOrderStatus(originalOrder, siteModel, CoreOrderStatus.REFUNDED.value)
 
         countDownLatch = CountDownLatch(1)
-        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), TimeUnit.MILLISECONDS))
+        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), MILLISECONDS))
 
         assertEquals(WCOrderAction.UPDATED_ORDER_STATUS, lastAction!!.type)
         val payload = lastAction!!.payload as RemoteOrderPayload
@@ -253,7 +252,7 @@ class MockedStack_WCOrdersTest : MockedStack_Base() {
         orderRestClient.updateOrderStatus(originalOrder, siteModel, CoreOrderStatus.REFUNDED.value)
 
         countDownLatch = CountDownLatch(1)
-        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), TimeUnit.MILLISECONDS))
+        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), MILLISECONDS))
 
         assertEquals(WCOrderAction.UPDATED_ORDER_STATUS, lastAction!!.type)
         val payload = lastAction!!.payload as RemoteOrderPayload
@@ -324,7 +323,7 @@ class MockedStack_WCOrdersTest : MockedStack_Base() {
         )
 
         countDownLatch = CountDownLatch(1)
-        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), TimeUnit.MILLISECONDS))
+        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), MILLISECONDS))
 
         assertEquals(WCOrderAction.FETCHED_ORDER_NOTES, lastAction!!.type)
         val payload = lastAction!!.payload as FetchOrderNotesResponsePayload
@@ -399,7 +398,7 @@ class MockedStack_WCOrdersTest : MockedStack_Base() {
         orderRestClient.fetchHasOrders(siteModel, filterByStatus = null)
 
         countDownLatch = CountDownLatch(1)
-        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), TimeUnit.MILLISECONDS))
+        assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), MILLISECONDS))
 
         assertEquals(WCOrderAction.FETCHED_HAS_ORDERS, lastAction!!.type)
         val payload = lastAction!!.payload as FetchHasOrdersResponsePayload
@@ -519,7 +518,7 @@ class MockedStack_WCOrdersTest : MockedStack_Base() {
         }
 
         interceptor.respondWith("wc-delete-order-shipment-tracking-success.json")
-        orderRestClient.deleteShipmentTrackingForOrder(siteModel, orderModel, trackingModel)
+        orderRestClient.deleteShipmentTrackingForOrder(siteModel, orderModel, trackingModel.remoteTrackingId)
 
         countDownLatch = CountDownLatch(1)
         assertTrue(countDownLatch.await(TestUtils.DEFAULT_TIMEOUT_MS.toLong(), MILLISECONDS))
